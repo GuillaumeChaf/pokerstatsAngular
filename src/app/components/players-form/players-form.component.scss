@@ -1,0 +1,10 @@
+.form-colomn{
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+app-player{
+    flex: 1;
+}

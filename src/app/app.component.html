@@ -1,1 +1,13 @@
-<div> {{title}}</div>
+<header class="w-100" [style.height.px]="headerHeight">Pokerstats</header>
+<div id="body" class="d-flex fill">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex">
+    <div class="width-fill-a">
+      <app-players-form />
+    </div>
+    <section id="column-annex" class="ml-2 h-100 d-flex" [style.paddingTop.px]="headerHeight">
+      <app-directions class="mb-2" />
+      <app-submit-form />
+    </section>
+  </form>
+</div>
+<footer class="w-100"></footer>
