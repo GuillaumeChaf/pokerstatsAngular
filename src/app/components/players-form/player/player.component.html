@@ -1,4 +1,8 @@
-<form [formGroup]="form" class="fill"> 
-<app-player-side-frame [playerForm]="form"/>
-<app-player-table-frame [playerForm]="form"/>
+<form [formGroup]="form" class="fill">
+  @defer(when activStateSig()){
+  <app-player-side-frame [playerForm]="form" (close)="truc()" />
+  <app-player-table-frame [playerForm]="form" />
+  } @placeholder {
+  <button (click)="activStateSig.set(true)">ACTIVE</button>
+  }
 </form>

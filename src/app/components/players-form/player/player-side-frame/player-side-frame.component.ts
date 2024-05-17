@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -11,4 +11,10 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class PlayerSideFrameComponent {
   /** formulaire dans lequel sont inclut les champs */
   @Input({ required: true }) playerForm!: FormGroup;
+
+  @Output() close: EventEmitter<null> = new EventEmitter<null>();
+
+  onClose() {
+    this.close.emit(null);
+  }
 }

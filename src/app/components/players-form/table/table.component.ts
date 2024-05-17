@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../player/card/card.component';
 
@@ -9,7 +9,7 @@ import { CardComponent } from '../player/card/card.component';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent {
+export class TableComponent implements AfterViewInit {
   //#region récupération du formulaire parent
   parentContainer = inject(ControlContainer);
   get parentFormGroup() {
@@ -26,14 +26,6 @@ export class TableComponent {
   @ViewChild('picture') picture?: ElementRef<HTMLPictureElement>;
 
   ngAfterViewInit() {
-    this.pictureheightSig.set(this.picture?.nativeElement?.clientHeight as any as number);
-  }
-
-  ngOnInit() {
-    // this.parentFormGroup.addControl('card1', new FormControl());
-    // this.parentFormGroup.addControl('card2', new FormControl());
-    // this.parentFormGroup.addControl('card3', new FormControl());
-    // this.parentFormGroup.addControl('card4', new FormControl());
-    // this.parentFormGroup.addControl('card5', new FormControl());
+    this.pictureheightSig.set(this.picture?.nativeElement?.clientHeight ?? 800);
   }
 }

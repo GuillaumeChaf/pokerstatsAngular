@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, WritableSignal, effect, inject, signal } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerSideFrameComponent } from './player-side-frame/player-side-frame.component';
 import { PlayerTableFrameComponent } from './player-table-frame/player-table-frame.component';
@@ -11,15 +11,15 @@ import { Player } from 'src/app/models/player';
   templateUrl: './player.component.html',
   styleUrl: './player.component.scss',
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent /**implements OnInit */ {
   /** information sur le joueur */
   @Input({ required: true }) player!: Player;
-
+  //#region récupération du formulaire parent
   parentContainer = inject(ControlContainer);
-
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;
   }
+  //#endregion
   /** formulaire du joueur */
   form: FormGroup = new FormGroup({
     card1: new FormControl(),
@@ -27,8 +27,17 @@ export class PlayerComponent implements OnInit {
     condition: new FormControl(),
     suit: new FormControl(),
   });
+  /** état d'activation du joueur */
+  activStateSig: WritableSignal<boolean> = signal(false);
 
-  ngOnInit() {
-    this.parentFormGroup.addControl(this.player.id, this.form);
+  constructor() {
+    effect(() => {
+      if (this.activStateSig()) this.parentFormGroup.addControl(this.player.id, this.form);
+      else this.parentFormGroup.removeControl(this.player.id);
+    });
+  }
+
+  truc() {
+    this.activStateSig.set(false);
   }
 }
