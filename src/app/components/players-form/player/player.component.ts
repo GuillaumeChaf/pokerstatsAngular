@@ -2,7 +2,7 @@ import { Component, Input, OnInit, WritableSignal, effect, inject, signal } from
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerSideFrameComponent } from './player-side-frame/player-side-frame.component';
 import { PlayerTableFrameComponent } from './player-table-frame/player-table-frame.component';
-import { Player } from 'src/app/models/player';
+import { PlayerConfiguration } from 'src/app/models/player';
 
 @Component({
   selector: 'app-player',
@@ -13,7 +13,7 @@ import { Player } from 'src/app/models/player';
 })
 export class PlayerComponent /**implements OnInit */ {
   /** information sur le joueur */
-  @Input({ required: true }) player!: Player;
+  @Input({ required: true }) player!: PlayerConfiguration;
   //#region récupération du formulaire parent
   parentContainer = inject(ControlContainer);
   get parentFormGroup() {
@@ -35,9 +35,5 @@ export class PlayerComponent /**implements OnInit */ {
       if (this.activStateSig()) this.parentFormGroup.addControl(this.player.id, this.form);
       else this.parentFormGroup.removeControl(this.player.id);
     });
-  }
-
-  truc() {
-    this.activStateSig.set(false);
   }
 }

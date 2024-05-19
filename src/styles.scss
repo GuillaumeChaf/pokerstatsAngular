@@ -18,3 +18,8 @@ body{
     height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
     height: fill-available;
 }
+svg{
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+}

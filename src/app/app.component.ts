@@ -3,7 +3,7 @@ import { PlayersFormComponent } from './components/players-form/players-form.com
 import { DirectionsComponent } from './components/secondary-components/directions/directions.component';
 import { SubmitFormComponent } from './components/secondary-components/submit-form/submit-form.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { headerHeight } from './models/positions-configuration';
+import { headerHeight } from './models/configurations';
 
 @Component({
   selector: 'app-root',

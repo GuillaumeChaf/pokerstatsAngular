@@ -1,4 +1,4 @@
-<div class="w-100 h-100 d-flex">
+<div class="fill d-flex" id="body">
   <form [formGroup]="playersForm" class="form-colomn" [style.marginTop.px]="headerHeight">
     <app-player [player]="playerList['1']" />
     <app-player [player]="playerList['2']" />
@@ -7,9 +7,9 @@
   </form>
   <app-table />
   <form class="form-colomn" [formGroup]="playersForm" [style.marginTop.px]="headerHeight">
-    <app-player [player]="playerList['5']" />
-    <app-player [player]="playerList['6']" />
-    <app-player [player]="playerList['7']" />
     <app-player [player]="playerList['8']" />
+    <app-player [player]="playerList['7']" />
+    <app-player [player]="playerList['6']" />
+    <app-player [player]="playerList['5']" />
   </form>
 </div>
