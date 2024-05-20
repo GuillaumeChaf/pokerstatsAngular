@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, ModelSignal, Output, Signal, computed, model } from '@angular/core';
+import { Component, Input, ModelSignal, Signal, computed, model } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerConfiguration } from 'src/app/models/player';
 

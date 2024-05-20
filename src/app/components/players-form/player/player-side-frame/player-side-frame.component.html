@@ -1,10 +1,9 @@
 <form [formGroup]="playerForm" id="body" class="fill">
   <!-- <input formControlName="condition" />
   <input formControlName="suit" /> -->
-  <button class="btn-activ-state" type="button" (click)="activState.set(!activState())">
+  <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
     <svg viewBox="0 0 448 512" class="fill">
       <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
     </svg>
   </button>
-  {{ conf.id }}
 </form>

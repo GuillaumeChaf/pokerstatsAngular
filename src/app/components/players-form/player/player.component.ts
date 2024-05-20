@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, WritableSignal, effect, inject, signal } from '@angular/core';
+import { Component, Input, WritableSignal, effect, inject, signal } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerSideFrameComponent } from './player-side-frame/player-side-frame.component';
 import { PlayerTableFrameComponent } from './player-table-frame/player-table-frame.component';
 import { PlayerConfiguration } from 'src/app/models/player';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-player',
@@ -22,8 +23,8 @@ export class PlayerComponent /**implements OnInit */ {
   //#endregion
   /** formulaire du joueur */
   form: FormGroup = new FormGroup({
-    card1: new FormControl(),
-    card2: new FormControl(),
+    card1: new FormControl(new Card()),
+    card2: new FormControl(new Card()),
     condition: new FormControl(),
     suit: new FormControl(),
   });
