@@ -1,5 +1,21 @@
-picture{
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: block;
+picture {
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  position: relative;
+}
+form {
+  display: flex;
+  background-color: rgb(255 255 255 / 15%);
+  position: absolute;
+  top: 405px;
+  left: 335px;
+  padding: 0.5rem;
+}
+app-card {
+  margin: 0.25rem;
+  &#card-4,
+  &#card-5 {
+    margin-left: 1.5rem;
+  }
 }

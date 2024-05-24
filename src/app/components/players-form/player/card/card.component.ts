@@ -1,8 +1,9 @@
 import { KeyValue, KeyValuePipe, NgClass } from '@angular/common';
-import { Component, Input, WritableSignal, forwardRef, model, signal } from '@angular/core';
+import { Component, Input, Signal, TemplateRef, ViewChild, ViewContainerRef, computed, forwardRef, inject, model } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Card, Symbol, cardValueConfig, symbolConfig } from 'src/app/models/card';
 import { PlayerConfiguration } from 'src/app/models/player';
+import { CardService } from 'src/app/services/card.service';
 
 @Component({
   selector: 'app-card',
@@ -30,14 +31,24 @@ export class CardComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
   //#endregion
-  pickerDDStateSig: WritableSignal<boolean> = signal(false);
+  /** service de gestion des cartes */
+  cardS = inject(CardService);
 
+  //#region variables pour la popUp
   /** position par défaut de la popUp */
   defaultPopupPosition = { bottom: 200, left: 50 };
   /** configuration de l'affichage des symboles */
   symbolConfig = symbolConfig;
   /** configuration de l'affichage des valeurs */
   valueConfig = cardValueConfig;
+  //#endregion
+  /** configuration du symbole de la carte */
+  ngMSymbolConfig: Signal<symbolConfig | undefined> = computed(() => this.symbolConfig[this.ngModel()?.symbol as number]);
+  /** configuration de valeur de la carte */
+  ngMValueConfig: Signal<cardValueConfig | undefined> = computed(() => {
+    const v = this.ngModel()?.value as number;
+    return this.valueConfig[v];
+  });
 
   /** fonction d'ordonnancement des valeurs */
   orderFnc: (a: KeyValue<string, cardValueConfig>, b: KeyValue<string, cardValueConfig>) => number = (
@@ -46,13 +57,21 @@ export class CardComponent implements ControlValueAccessor {
   ): number => {
     return valueA.value - valueB.value;
   };
+  /** template de la popUp */
+  @ViewChild('popUpTemplate') popUpTemplate!: TemplateRef<HTMLDivElement>;
+  /** container de la popUp */
+  @ViewChild('popUpContainer', { read: ViewContainerRef }) popUpContainer!: ViewContainerRef;
+
+  changeStatePopUp() {
+    this.cardS.changeStatePopUp(this.popUpContainer, this.popUpTemplate);
+  }
 
   /** modification de la valeur de la carte */
   setValue(value: number) {
     this.ngModel.update((v) => {
       if (!v) return;
       v.value = v.value === value ? undefined : value;
-      return v;
+      return v.newRef(v);
     });
   }
 
@@ -61,7 +80,7 @@ export class CardComponent implements ControlValueAccessor {
     this.ngModel.update((v) => {
       if (!v) return;
       v.symbol = v.symbol === symbol ? undefined : symbol;
-      return v;
+      return v.newRef(v);
     });
   }
 }

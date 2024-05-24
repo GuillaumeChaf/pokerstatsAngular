@@ -1,3 +1,5 @@
+@import 'src/assets/styles/graphic-chart.scss';
+
 form {
   background-color: green;
   border: solid 1px red;
@@ -5,6 +7,7 @@ form {
 .btn-activ-state {
   width: 20px;
   height: 20px;
+  color: $main-color;
 }
 app-player-table-frame {
   width: 190px;

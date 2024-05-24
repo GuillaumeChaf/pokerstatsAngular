@@ -1,4 +1,6 @@
 <form [formGroup]="playerForm" id="body" class="fill">
+  <span>{{ this.conf.name }}</span>
+
   <!-- <input formControlName="condition" />
   <input formControlName="suit" /> -->
   <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">

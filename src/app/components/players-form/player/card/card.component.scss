@@ -1,9 +1,40 @@
+@import 'src/assets/styles/graphic-chart.scss';
+
+//#region visuel de la carte
 #body {
-  background-color: yellow;
-  width: 50px;
-  height: 75px;
+  background-color: $almost-white;
+  width: 45px;
+  height: 67px;
   position: relative;
+  border: solid 3px rgba($main-grey, 0);
+  cursor: pointer;
+  display: flex;
+  padding: 2px;
+  &:hover {
+    border: solid 3px $main-grey-hover;
+  }
 }
+#card-undefined {
+  margin: auto;
+  color: $main-color;
+  font-size: 1.4rem;
+}
+#card-symb {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: 2px;
+  top: 2px;
+}
+#card-val {
+  position: absolute;
+  text-align: center;
+  bottom: 2px;
+  margin: 0;
+  font-family: system-ui;
+  font-size: 2rem;
+}
+//#endregion
 //#region popUp
 #popUp {
   position: absolute;
@@ -16,12 +47,15 @@
   flex-wrap: wrap;
   .col-3 {
     padding: 5px;
+    &:last-child {
+      margin: 0 auto;
+    }
   }
 }
 .svg-btn {
   width: 22px;
   height: 22px;
-  border: solid 1px blue;
+  border: solid 1px $main-color;
   padding: 3px;
   display: flex;
   justify-content: center;
@@ -33,10 +67,10 @@
   }
 }
 .svg-btn.activ {
-  background-color: blue;
+  background-color: $main-color;
   span,
   svg {
-    color: white;
+    color: white !important;
   }
 }
 //#endregion

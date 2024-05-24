@@ -1,6 +1,8 @@
 export class PlayerConfiguration {
   /** identifiant du joueur */
   id!: string;
+  /** nom du joueur (déco) */
+  name!: string;
   /** position de la frame de table (formulaire avec les 2 cartes) du joueur en Y */
   bottom!: number;
   /** position de la frame de table (formulaire avec les 2 cartes) du joueur en X */

@@ -1,39 +1,41 @@
-<div id="body" (click)="pickerDDStateSig.set(!this.pickerDDStateSig())" class="rounded">
+<div id="body" (click)="changeStatePopUp()" class="rounded">
   @if(ngModel()?.isComplete()){
-  <h6>{{ ngModel()?.symbol }}</h6>
-  <h6>{{ ngModel()?.value }}</h6>
+  <svg attr.viewBox="{{ ngMSymbolConfig()?.viewBox }}" id="card-symb" style.color="{{ ngMSymbolConfig()?.color }}">
+    <use attr.xlink:href="{{ 'assets/svg/symbols/' + ngMSymbolConfig()?.svgPath + '.svg#body' }}"></use>
+  </svg>
+  <h6 id="card-val" class="width-fill-a">{{ ngMValueConfig()?.label }}</h6>
   }@else {
-  <h6>?</h6>
+  <h6 id="card-undefined">?</h6>
   }
 </div>
-@if(pickerDDStateSig()){
-<div
-  id="popUp"
-  class="rounded"
-  [style.bottom.px]="conf?.cardsBottom ?? defaultPopupPosition.bottom"
-  [style.left.px]="conf?.cardsLeft ?? defaultPopupPosition.left"
->
-  <div class="line container">
-    @for(s of symbolConfig | keyvalue; track s.value.value){
-    <div class="col-3">
-      <button (click)="setSymbol(s.value.value)" type="button" class="rounded svg-btn" [ngClass]="{ activ: ngModel()?.symbol === s.value.value }">
-        <svg attr.viewBox="{{ s.value.viewBox }}" class="fill" style.color="{{ s.value.color }}">
-          <use attr.xlink:href="{{ 'assets/svg/symbols/' + s.value.svgPath + '.svg#body' }}"></use>
-        </svg>
-      </button>
+<ng-container #popUpContainer> </ng-container>
+<ng-template #popUpTemplate>
+  <div
+    id="popUp"
+    class="rounded"
+    [style.bottom.px]="conf?.cardsBottom ?? defaultPopupPosition.bottom"
+    [style.left.px]="conf?.cardsLeft ?? defaultPopupPosition.left"
+  >
+    <div class="line container">
+      @for(s of symbolConfig | keyvalue; track s.value.value){
+      <div class="col-3">
+        <button (click)="setSymbol(s.value.value)" type="button" class="rounded svg-btn" [ngClass]="{ activ: ngModel()?.symbol === s.value.value }">
+          <svg attr.viewBox="{{ s.value.viewBox }}" class="fill" style.color="{{ s.value.color }}">
+            <use attr.xlink:href="{{ 'assets/svg/symbols/' + s.value.svgPath + '.svg#body' }}"></use>
+          </svg>
+        </button>
+      </div>
+      }
     </div>
-    }
-  </div>
-  <hr class="m-2 my-1" />
-  <div class="line container">
-    @for(v of valueConfig | keyvalue : orderFnc; track v.value.value){
-    <div class="col-3">
-      <button (click)="setValue(v.value.value)" type="button" class="rounded svg-btn" [ngClass]="{ activ: ngModel()?.value === v.value.value }">
-        <span>{{ v.value.label }}</span>
-      </button>
+    <hr class="m-2 my-1" />
+    <div class="line container">
+      @for(v of valueConfig | keyvalue : orderFnc; track v.value.value){
+      <div class="col-3">
+        <button (click)="setValue(v.value.value)" type="button" class="rounded svg-btn" [ngClass]="{ activ: ngModel()?.value === v.value.value }">
+          <span>{{ v.value.label }}</span>
+        </button>
+      </div>
+      }
     </div>
-    }
   </div>
-</div>
-}
-<!-- }  -->
+</ng-template>

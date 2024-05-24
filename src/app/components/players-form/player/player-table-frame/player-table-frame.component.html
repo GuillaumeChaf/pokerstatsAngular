@@ -1,11 +1,14 @@
-<form [formGroup]="playerForm" class="fill rounded p-2">
+<form [formGroup]="playerForm" class="fill rounded">
+  <header>
+    <span>{{ this.conf.name }}</span>
+    <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
+      <svg viewBox="0 0 448 512" class="fill">
+        <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
+      </svg>
+    </button>
+  </header>
   <section>
     <app-card formControlName="card1" />
     <app-card formControlName="card2" />
   </section>
-  <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
-    <svg viewBox="0 0 448 512" class="fill">
-      <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
-    </svg>
-  </button>
 </form>

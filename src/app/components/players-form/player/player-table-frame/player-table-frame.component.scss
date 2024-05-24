@@ -1,12 +1,19 @@
-form{
-    background-color: white;
-    position: relative;
+form {
+  background-color: white;
+  position: relative;
+  padding: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
-section{
-    display: flex;
+header {
+  display: flex;
+  justify-content: space-between;
 }
-.btn-activ-state{
-    position: absolute;
-    top: 0;
-    right: 0;
+section {
+  display: flex;
+  justify-content: center;
+}
+app-card:last-child {
+  margin-left: 0.5rem;
 }

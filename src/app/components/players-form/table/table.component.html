@@ -1,9 +1,9 @@
 <picture #picture style="background-image: url('assets/backgrounds/table-spun.jpg')" class="fill" [style.width.px]="this.widthSig()">
-  <form [formGroup]="parentFormGroup">
+  <form [formGroup]="parentFormGroup" class="rounded">
     <app-card [formControlName]="'card1'" />
     <app-card [formControlName]="'card2'" />
     <app-card [formControlName]="'card3'" />
-    <app-card [formControlName]="'card4'" />
-    <app-card [formControlName]="'card5'" />
+    <app-card id="card-4" [formControlName]="'card4'" />
+    <app-card id="card-5" [formControlName]="'card5'" />
   </form>
 </picture>

@@ -1,13 +1,12 @@
-#body{
-    position: relative;
+#body {
+  position: relative;
 }
-.form-colomn{
-    width: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
+.form-colomn {
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-app-player{
-    flex: 1;
+app-player {
+  flex: 1;
 }
