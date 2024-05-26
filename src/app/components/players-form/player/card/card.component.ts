@@ -1,7 +1,8 @@
 import { KeyValue, KeyValuePipe, NgClass } from '@angular/common';
 import { Component, Input, Signal, TemplateRef, ViewChild, ViewContainerRef, computed, forwardRef, inject, model } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Card, Symbol, cardValueConfig, symbolConfig } from 'src/app/models/card';
+import { Card, Symbol } from 'src/app/models/card';
+import { cardValueConfig, defaultPopupPosition, popUpSize, symbolConfig } from 'src/app/models/card-configurations';
 import { PlayerConfiguration } from 'src/app/models/player';
 import { CardService } from 'src/app/services/card.service';
 
@@ -19,12 +20,12 @@ export class CardComponent implements ControlValueAccessor {
   /** configuration optionnelle utile notammenet pour la positionnement de la popUp */
   @Input() conf?: PlayerConfiguration;
   //#region implémentation de ControlValueAccessor
-  onChange?: (value: string) => void;
-  onTouched?: () => void;
+  onChange: (value: Card) => void = () => {};
+  onTouched: () => void = () => {};
   writeValue(card: Card): void {
     this.ngModel.set(card);
   }
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: Card) => void): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: () => void): void {
@@ -35,8 +36,10 @@ export class CardComponent implements ControlValueAccessor {
   cardS = inject(CardService);
 
   //#region variables pour la popUp
+  /** taille de la popUp */
+  popUpSize = popUpSize;
   /** position par défaut de la popUp */
-  defaultPopupPosition = { bottom: 200, left: 50 };
+  defaultPopupPosition = defaultPopupPosition;
   /** configuration de l'affichage des symboles */
   symbolConfig = symbolConfig;
   /** configuration de l'affichage des valeurs */
@@ -71,7 +74,9 @@ export class CardComponent implements ControlValueAccessor {
     this.ngModel.update((v) => {
       if (!v) return;
       v.value = v.value === value ? undefined : value;
-      return v.newRef(v);
+      const vNewRef = v.newRef(v);
+      // this.writeValue(vNewRef);
+      return vNewRef;
     });
   }
 
@@ -80,7 +85,9 @@ export class CardComponent implements ControlValueAccessor {
     this.ngModel.update((v) => {
       if (!v) return;
       v.symbol = v.symbol === symbol ? undefined : symbol;
-      return v.newRef(v);
+      const vNewRef = v.newRef(v);
+      // this.writeValue(vNewRef);
+      return vNewRef;
     });
   }
 }

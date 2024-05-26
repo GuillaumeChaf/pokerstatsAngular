@@ -1,4 +1,6 @@
 import { Injectable, TemplateRef, ViewContainerRef, ViewRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Card } from '../models/card';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +21,10 @@ export class CardService {
       this.displayedViewRef = container.createEmbeddedView(template);
     }
   }
+  //#endregion
+
+  //#region gestion des doublons de carte
+  cardDataBase: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>([]);
+
   //#endregion
 }

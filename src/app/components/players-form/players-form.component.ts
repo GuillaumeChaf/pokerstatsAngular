@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerComponent } from './player/player.component';
 import { TableComponent } from './table/table.component';
-import { playerListConfiguration, headerHeight } from 'src/app/models/configurations';
+import { headerHeight, playerListConfiguration } from 'src/app/models/player-configurations';
 
 @Component({
   selector: 'app-players-form',

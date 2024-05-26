@@ -12,7 +12,9 @@
 <ng-template #popUpTemplate>
   <div
     id="popUp"
-    class="rounded"
+    class="rounded low-shadow"
+    [style.width.px]="popUpSize.width"
+    [style.height.px]="popUpSize.height"
     [style.bottom.px]="conf?.cardsBottom ?? defaultPopupPosition.bottom"
     [style.left.px]="conf?.cardsLeft ?? defaultPopupPosition.left"
   >
@@ -27,7 +29,7 @@
       </div>
       }
     </div>
-    <hr class="m-2 my-1" />
+    <hr class="m-2 my-0" />
     <div class="line container">
       @for(v of valueConfig | keyvalue : orderFnc; track v.value.value){
       <div class="col-3">
