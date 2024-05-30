@@ -2,11 +2,14 @@ import { Component, Input, ModelSignal, Signal, computed, model } from '@angular
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { combinationList } from 'src/app/models/combinations';
 import { PlayerConfiguration } from 'src/app/models/player';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-player-side-frame',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, ReactiveFormsModule],
   templateUrl: './player-side-frame.component.html',
   styleUrls: ['../player.component.scss', './player-side-frame.component.scss'],
 })
@@ -21,4 +24,8 @@ export class PlayerSideFrameComponent {
   activBtnSvgSig: Signal<string> = computed(() => `assets/svg/activation-states/${this.activState() ? 'square-minus' : 'square-plus'}.svg#body`);
   /**   liste de combinaisons */
   combinationList = combinationList;
+
+  get suit(): any {
+    return this.playerForm.controls['suit'];
+  }
 }
