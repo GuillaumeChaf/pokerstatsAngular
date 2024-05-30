@@ -20,7 +20,9 @@ export class CardComponent implements ControlValueAccessor {
   /** configuration optionnelle utile notammenet pour la positionnement de la popUp */
   @Input() conf?: PlayerConfiguration;
   //#region implémentation de ControlValueAccessor
-  onChange: (value: Card) => void = () => {};
+  onChange: (value: Card) => void = (v: Card) => {
+    this.ngModel.set(v);
+  };
   onTouched: () => void = () => {};
   writeValue(card: Card): void {
     this.ngModel.set(card);
@@ -65,8 +67,9 @@ export class CardComponent implements ControlValueAccessor {
   /** container de la popUp */
   @ViewChild('popUpContainer', { read: ViewContainerRef }) popUpContainer!: ViewContainerRef;
 
-  changeStatePopUp() {
+  changeStatePopUp(e: any) {
     this.cardS.changeStatePopUp(this.popUpContainer, this.popUpTemplate);
+    e.stopPropagation();
   }
 
   /** modification de la valeur de la carte */
@@ -74,8 +77,8 @@ export class CardComponent implements ControlValueAccessor {
     this.ngModel.update((v) => {
       if (!v) return;
       v.value = v.value === value ? undefined : value;
-      const vNewRef = v.newRef(v);
-      // this.writeValue(vNewRef);
+      const vNewRef = this.cardS.registerNewCard(v);
+      this.onChange(vNewRef);
       return vNewRef;
     });
   }
@@ -85,9 +88,14 @@ export class CardComponent implements ControlValueAccessor {
     this.ngModel.update((v) => {
       if (!v) return;
       v.symbol = v.symbol === symbol ? undefined : symbol;
-      const vNewRef = v.newRef(v);
-      // this.writeValue(vNewRef);
+      const vNewRef = this.cardS.registerNewCard(v);
+      this.onChange(vNewRef);
       return vNewRef;
     });
+  }
+
+  /** simple fonction pour éviter la fermeture de la popUp si l'on clique sur cette popUp */
+  clickOnPopUp(e: any) {
+    e.stopPropagation();
   }
 }

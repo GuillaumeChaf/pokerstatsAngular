@@ -1,5 +1,6 @@
 import { Component, Input, ModelSignal, Signal, computed, model } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { combinationList } from 'src/app/models/combinations';
 import { PlayerConfiguration } from 'src/app/models/player';
 
 @Component({
@@ -18,4 +19,6 @@ export class PlayerSideFrameComponent {
   activState: ModelSignal<boolean | undefined> = model<boolean>();
   /** chemin du svg du bouton d'activation */
   activBtnSvgSig: Signal<string> = computed(() => `assets/svg/activation-states/${this.activState() ? 'square-minus' : 'square-plus'}.svg#body`);
+  /**   liste de combinaisons */
+  combinationList = combinationList;
 }

@@ -5,7 +5,7 @@ export const popUpSize = {
   width: 138,
   height: 180,
 };
-export const defaultPopupPosition = { bottom: 90, left: 0 };
+export const defaultPopupPosition = { bottom: -190, left: 0 };
 //#endregion
 //#region configuration du visuel de pick de carte
 export type symbolConfig = {

@@ -1,19 +1,25 @@
 export class Card {
+  id: string;
   /** symbole de la carte (coeur, trèfle...) */
   symbol?: Symbol;
   /** valeur (As, roi...) */
   value?: number;
 
-  constructor(v?: Card) {
-    Object.assign(this, v);
+  get uniqueValue() {
+    return `S${this.symbol}V${this.value}`;
+  }
+  constructor(id: string) {
+    this.id = id;
   }
   /** fonction pour savoir si la carte est entièrement complété ou non */
   isComplete(): boolean {
     return this.symbol != null && this.value != null;
   }
-  /** meme objet avec une référence différence */
-  newRef(card: Card) {
-    return new Card(card);
+  /** construction d'un meme objet avec une référence différente */
+  newRef() {
+    const newRef: Card = new Card(this.id);
+    Object.assign(newRef, this);
+    return newRef;
   }
 }
 
