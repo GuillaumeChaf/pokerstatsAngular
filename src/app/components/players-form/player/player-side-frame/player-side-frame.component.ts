@@ -46,7 +46,7 @@ import { Card } from 'src/app/models/card';
   templateUrl: './player-side-frame.component.html',
   styleUrls: ['../player.component.scss', './player-side-frame.component.scss'],
 })
-export class PlayerSideFrameComponent implements OnInit, OnDestroy {
+export class PlayerSideFrameComponent implements OnInit {
   /** formulaire dans lequel sont inclut les champs */
   @Input({ required: true }) playerForm!: FormGroup;
   /** information sur le joueur */
@@ -59,11 +59,11 @@ export class PlayerSideFrameComponent implements OnInit, OnDestroy {
   /** service dédié à l'envoie de calcul vers l'api */
   computationS = inject(ComputationService);
   /** observable qui va écouter le retour de calcul */
-  computationCallback$!: Subject<StatForm | null>;
+  computationCallbackSig!: WritableSignal<StatForm | null>;
   /** variable enregistrant la statistique à afficher */
-  statsString: string = '';
+  statsStrSig: Signal<string> = computed(() => this.computationCallbackSig()?.players?.[this.conf.id]?.statPerc ?? '');
   /** outs */
-  outs: Card[] = [];
+  outsSig: Signal<Card[]> = computed(() => this.computationCallbackSig()?.players?.[this.conf.id]?.outs ?? []);
   //#endregion
   /** valeur séléctionné en suit visuellement */
   selectedOption!: combinationDPConfig;
@@ -78,8 +78,6 @@ export class PlayerSideFrameComponent implements OnInit, OnDestroy {
   mainGrey = mainGrey;
   //#endregion
 
-  computationCallbackSubscription!: Subscription;
-
   get suit(): FormControl<Combination> {
     return this.playerForm.controls['suit'] as FormControl;
   }
@@ -88,18 +86,10 @@ export class PlayerSideFrameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.computationCallback$ = this.computationS.callback$;
+    this.computationCallbackSig = this.computationS.callbackSig;
     this.selectedOption = combinationDP[this.suit.value];
     this.condition.valueChanges.subscribe((v: condition) => {
       this.activeSig.set(v);
-    });
-    this.initResultListener();
-  }
-
-  initResultListener() {
-    this.computationCallbackSubscription = this.computationCallback$.subscribe((stats: StatForm | null) => {
-      this.statsString = stats?.players?.[this.conf.id]?.statPerc ?? '';
-      this.outs = stats?.players?.[this.conf.id]?.outs ?? [];
     });
   }
 
@@ -122,9 +112,5 @@ export class PlayerSideFrameComponent implements OnInit, OnDestroy {
   @HostListener('document:click')
   clickOut() {
     this.dropdownOpenSig.set(false);
-  }
-
-  ngOnDestroy() {
-    this.computationCallbackSubscription.unsubscribe();
   }
 }

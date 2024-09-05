@@ -36,11 +36,11 @@
         }
       </div>
     </div>
-    <span id="result">{{ statsString }}</span>
+    <span id="result">{{ statsStrSig() }}</span>
   </div>
   <app-player-outs-frame
     [conf]="conf"
-    [outs]="outs"
+    [outs]="outsSig()"
     [ngStyle]="{ right: conf.outsR ? '100%' : undefined, left: conf.outsR ? undefined : '100%' }"
     [style.bottom.px]="0"
   >

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { ComputePrompt } from '../models/compute-prompt';
 import StatForm, { statsCallback } from '../models/stats-callback';
 import { map, Subject } from 'rxjs';
@@ -9,25 +9,25 @@ import { map, Subject } from 'rxjs';
 })
 export class ComputationService {
   /** instances de service */
-  httpClient = inject(HttpClient);
+  private _httpClient = inject(HttpClient);
   /** retour de statistique */
-  callback$ = new Subject<StatForm | null>();
+  callbackSig: WritableSignal<StatForm | null> = signal(null);
   /** retour d'erreur */
-  error$ = new Subject<string | null>();
+  errorSig: WritableSignal<string | null> = signal(null);
 
   /** requete de calcul de statistiques */
   compute(inputs: ComputePrompt) {
-    this.error$.next(null);
-    this.callback$.next(null);
-    this.httpClient
+    this.errorSig.set(null);
+    this.callbackSig.set(null);
+    this._httpClient
       .post<statsCallback>('http://localhost:3000/', inputs.formatToBack())
       .pipe(map((v) => new StatForm(v)))
       .subscribe({
         next: (v: StatForm) => {
-          this.callback$.next(v);
+          this.callbackSig.set(v);
         },
         error: (err) => {
-          this.error$.next(err);
+          this.errorSig.set(err);
         },
       });
   }

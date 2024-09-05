@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef, ViewContainerRef, ViewRef } from '@angular/core';
+import { Injectable, signal, TemplateRef, ViewContainerRef, ViewRef, WritableSignal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Card } from '../models/card';
 
@@ -25,12 +25,12 @@ export class CardService {
 
   //#region gestion des doublons de carte
   /** enregistrement des cartes sélectionnés par l'utilisateur */
-  cardDataBase$: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>([]);
+  cardDataBaseSig: WritableSignal<Card[]> = signal<Card[]>([]);
 
   /** enregistrement d'une nouvelle carte dans la base */
   registerNewCard(card: Card): Card {
     const newCard = card.newRef();
-    this.cardDataBase$.next([...this.cardDataBase$.value.filter((w) => w.id !== newCard.id), newCard]);
+    this.cardDataBaseSig.update((v) => [...v.filter((w) => w.id !== newCard.id), newCard]);
     return newCard;
   }
 

@@ -39,19 +39,24 @@ export class PlayerComponent implements OnInit, OnDestroy {
   errorHandlerSubscription?: Subscription;
 
   constructor() {
-    effect(() => {
-      if (this.activStateSig()) {
-        this.parentFormGroup.addControl(this.player.id, this.form);
-        this.form.enable();
-        this.errorHandlerSubscription = this.form.valueChanges.subscribe((v) => this.fehS.updatePlayerErrors(this.player.id, this.form.errors ?? {}));
-        this.fehS.updatePlayerErrors(this.player.id, this.form.errors ?? {});
-      } else {
-        this.parentFormGroup.removeControl(this.player.id);
-        this.form.disable();
-        this.fehS.updatePlayerErrors(this.player.id, {});
-        this.errorHandlerSubscription?.unsubscribe();
-      }
-    });
+    effect(
+      () => {
+        if (this.activStateSig()) {
+          this.parentFormGroup.addControl(this.player.id, this.form);
+          this.form.enable();
+          this.errorHandlerSubscription = this.form.valueChanges.subscribe((v) =>
+            this.fehS.updatePlayerErrors(this.player.id, this.form.errors ?? {}),
+          );
+          this.fehS.updatePlayerErrors(this.player.id, this.form.errors ?? {});
+        } else {
+          this.parentFormGroup.removeControl(this.player.id);
+          this.form.disable();
+          this.fehS.updatePlayerErrors(this.player.id, {});
+          this.errorHandlerSubscription?.unsubscribe();
+        }
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   ngOnInit() {

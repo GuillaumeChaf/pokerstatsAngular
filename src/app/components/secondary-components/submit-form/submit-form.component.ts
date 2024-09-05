@@ -1,5 +1,5 @@
 import { AsyncPipe, KeyValuePipe, NgClass } from '@angular/common';
-import { Component, inject, Signal } from '@angular/core';
+import { Component, inject, Signal, WritableSignal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Card } from 'src/app/models/card';
@@ -30,19 +30,19 @@ export class SubmitFormComponent {
   /** instance du service de gestion d'erreur */
   fehS = inject(FormErrorHandlerService);
   /** base de données des cartes sélectionnées */
-  duplicatedCards$!: Observable<Card[]>;
+  duplicatedCardsSig!: Signal<Card[]>;
   /** observable écoutant les messages d'erreurs */
-  missingCardsMsg$!: Observable<{ [key: string]: string }>;
+  missingCardsMsgSig!: WritableSignal<{ [key: string]: string }>;
   //#endregion
   //#region gestion de l'affichage des données de split
   /** instance du service de calcul */
   computationS = inject(ComputationService);
   /** retour de calcul */
-  computationCallback$: Subject<StatForm | null>;
+  computationCallbackSig: WritableSignal<StatForm | null>;
   //#endregion
   displayS = inject(DisplayService);
   /** template affiché dans le cadre */
-  tplDisplate!: Signal<submitTpl>;
+  tplDisplateSig!: Signal<submitTpl>;
 
   test = {
     statPerc: 66.7,
@@ -51,9 +51,9 @@ export class SubmitFormComponent {
 
   //#endregion
   constructor() {
-    this.duplicatedCards$ = this.fehS.duplicatedCards$;
-    this.missingCardsMsg$ = this.fehS.missingCardsDataBase$;
-    this.computationCallback$ = this.computationS.callback$;
-    this.tplDisplate = this.displayS.displayState;
+    this.duplicatedCardsSig = this.fehS.duplicatedCardsSig;
+    this.missingCardsMsgSig = this.fehS.missingCardsDataBaseSig;
+    this.computationCallbackSig = this.computationS.callbackSig;
+    this.tplDisplateSig = this.displayS.displayStateSig;
   }
 }

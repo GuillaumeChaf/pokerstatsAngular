@@ -13,24 +13,23 @@ export type computationState = 'computationError' | 'pending' | 'callback' | nul
 })
 export class DisplayService {
   //#region instances de service
-  fehS = inject(FormErrorHandlerService);
-  computationS = inject(ComputationService);
+  private _fehS = inject(FormErrorHandlerService);
+  private _computationS = inject(ComputationService);
   //#endregion
 
   //#region différentes données collectées faisant évoluer l'état d'affichage
-  private _duplicates: Signal<any>; //WritableSignal<any[]> = signal([]);
-  private _missings!: Signal<any>; //WritableSignal<ValidationErrors> = signal({});
-  private _computation!: Signal<any>; //WritableSignal<StatForm | null> = signal(null);
-  private _errors!: Signal<any>; //WritableSignal<string | null> = signal(null);
+  private _duplicatesSig: Signal<any>; //WritableSignal<any[]> = signal([]);
+  private _missingsSig!: Signal<any>; //WritableSignal<ValidationErrors> = signal({});
+  private _computationSig: WritableSignal<StatForm | null> = signal(null);
+  private _errorsSig: WritableSignal<string | null> = signal(null);
   //#endregion
 
   /** état précédent de computationState */
-  private prevComputationState: computationState = null;
+  private _prevComputationState: computationState = null;
   /** null = cas ou le formulaire a été touché et qu'on ne veut plus afficher les résultats */
-  private computationState: Signal<computationState> = computed(() => {
-    // this.prevComputationState = this.computationState();
-    const computation = this._computation();
-    const errors = this._errors();
+  private _computationStateSig: Signal<computationState> = computed(() => {
+    const computation = this._computationSig();
+    const errors = this._errorsSig();
     if (!computation && !errors) return 'pending';
     else if (computation) return 'callback';
     else if (errors) return 'computationError';
@@ -38,17 +37,17 @@ export class DisplayService {
   });
 
   /** signal actuel enregistré sous forme de variable pour éviter des erreurs de lectures */
-  _currDisplayState: submitTpl = 'userError';
+  private _currDisplayState: submitTpl = 'userError';
   /** template affiché globalant sur la page */
-  displayState: Signal<submitTpl> = computed(() => {
-    const userError: boolean = Object.keys(this._missings()).length > 0 || this._duplicates().length > 0;
-    const computationState: computationState = this.computationState();
+  displayStateSig: Signal<submitTpl> = computed(() => {
+    const userError: boolean = Object.keys(this._missingsSig()).length > 0 || this._duplicatesSig().length > 0;
+    const computationState: computationState = this._computationStateSig();
     const displayCurr: submitTpl = this._currDisplayState;
 
     if (displayCurr === 'pending') return (computationState ?? 'pending') as submitTpl;
     else if (
       (['computationError', 'pending', 'callback'] as computationState[]).includes(computationState) &&
-      this.prevComputationState != computationState
+      this._prevComputationState != computationState
     ) {
       return computationState as submitTpl;
     } else return (userError ? 'userError' : 'noError') as submitTpl;
@@ -56,15 +55,20 @@ export class DisplayService {
 
   constructor() {
     effect(() => {
-      this._currDisplayState = this.displayState();
+      this._currDisplayState = this.displayStateSig();
     });
-    this._duplicates = toSignal(this.fehS.duplicatedCards$);
-    this._missings = toSignal(this.fehS.missingCardsDataBase$);
-    this._computation = toSignal(this.computationS.callback$);
-    this._errors = toSignal(this.computationS.error$);
+    effect(() => {
+      this._prevComputationState = this._computationStateSig();
+    });
+    // this._duplicates = toSignal(this.fehS.duplicatedCards$);
+    // this._missings = toSignal(this.fehS.missingCardsDataBase$);
+    // this._computation = toSignal(this.computationS.callback$);
+    // this._errors = toSignal(this.computationS.error$);
 
-    // this._duplicates = this.fehS.duplicatedCards$;
-    // this._missings = this.fehS.missingCardsDataBase$;
+    this._duplicatesSig = this._fehS.duplicatedCardsSig;
+    this._missingsSig = this._fehS.missingCardsDataBaseSig;
+    this._computationSig = this._computationS.callbackSig;
+    this._errorsSig = this._computationS.errorSig;
     // this.fehS.missingCardsDataBase$.subscribe((v) => {
     //   this._missings.set(v as any);
     // });

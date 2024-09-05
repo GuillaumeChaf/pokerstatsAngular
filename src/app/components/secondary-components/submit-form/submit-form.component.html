@@ -1,6 +1,6 @@
 <div id="body" class="fill" [ngClass]="{ error: this.parentFormGroup.invalid, noError: this.parentFormGroup.valid }">
-  @switch(tplDisplate()){ @case ('userError'){
-  <div id="error-body" *ngLet="duplicatedCards$ | async as duplicatedCards">
+  @switch(tplDisplateSig()){ @case ('userError'){
+  <div id="error-body" *ngLet="duplicatedCardsSig() as duplicatedCards">
     @if(duplicatedCards?.length){
     <span class="error-msg">- Certaines cartes sont en double : </span>
     <div class="card-list">
@@ -8,7 +8,7 @@
       <app-card-rd [card]="card"></app-card-rd>
       }
     </div>
-    } @for(error of missingCardsMsg$ | async | keyvalue; track error.key){
+    } @for(error of missingCardsMsgSig() | keyvalue; track error.key){
     <span class="error-msg">- {{ error.value }}</span
     ><br />
     }
