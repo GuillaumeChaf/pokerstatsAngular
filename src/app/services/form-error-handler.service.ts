@@ -13,11 +13,11 @@ export class FormErrorHandlerService {
 
   //#region erreur lié à la duplication de carte
   /** calcul des cartes dupliquées par rapport à toute les cartes */
-  // duplicatedCards$: Observable<Card[]> = this.cardS.cardDataBase$.pipe(
-  //   map((v) => v.filter((w) => w != null && w.isComplete())),
-  //   map((v) => this.getDuplicates(v)),
-  // );
-  duplicatedCards$: WritableSignal<Card[]> = signal([]);
+  duplicatedCards$: Observable<Card[]> = this.cardS.cardDataBase$.pipe(
+    map((v) => v.filter((w) => w != null && w.isComplete())),
+    map((v) => this.getDuplicates(v)),
+  );
+  // duplicatedCards$: WritableSignal<Card[]> = signal([]);
 
   /**
    * algorithme d'isolation des doublons de la liste en paramètre
@@ -43,26 +43,26 @@ export class FormErrorHandlerService {
   }
   //#endregion
   //#region liés aux cartes manquante chez des joueurs actifs
-  // missingCardsDataBase$ = new BehaviorSubject<ValidationErrors>({});
-  missingCardsDataBase$: WritableSignal<ValidationErrors> = signal({});
+  missingCardsDataBase$ = new BehaviorSubject<ValidationErrors>({});
+  // missingCardsDataBase$: WritableSignal<ValidationErrors> = signal({});
 
   /**
    * modification des erreurs de carte manquante lié à un joueur
    * @param idPlayer id du joueur concerné
    * @param errors les nouvelles erreurs à enregistrer
    */
-  // updatePlayerErrors(idPlayer: string, errors: ValidationErrors) {
-  //   const missngCardsDB = this.missingCardsDataBase$.getValue();
-  //   delete missngCardsDB[`${idPlayer}_C1`];
-  //   delete missngCardsDB[`${idPlayer}_C2`];
-  //   this.missingCardsDataBase$.next({ ...missngCardsDB, ...errors });
-  // }
-
   updatePlayerErrors(idPlayer: string, errors: ValidationErrors) {
-    const missngCardsDB = this.missingCardsDataBase$();
+    const missngCardsDB = this.missingCardsDataBase$.getValue();
     delete missngCardsDB[`${idPlayer}_C1`];
     delete missngCardsDB[`${idPlayer}_C2`];
-    this.missingCardsDataBase$.set({ ...missngCardsDB, ...errors });
+    this.missingCardsDataBase$.next({ ...missngCardsDB, ...errors });
   }
+
+  // updatePlayerErrors(idPlayer: string, errors: ValidationErrors) {
+  //   const missngCardsDB = this.missingCardsDataBase$();
+  //   delete missngCardsDB[`${idPlayer}_C1`];
+  //   delete missngCardsDB[`${idPlayer}_C2`];
+  //   this.missingCardsDataBase$.set({ ...missngCardsDB, ...errors });
+  // }
   //#endregion
 }

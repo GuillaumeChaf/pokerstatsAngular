@@ -58,13 +58,13 @@ export class DisplayService {
     effect(() => {
       this._currDisplayState = this.displayState();
     });
-    // this._duplicates = toSignal(this.fehS.duplicatedCards$);
-    // this._missings = toSignal(this.fehS.missingCardsDataBase$);
-    // this._computation = toSignal(this.computationS.callback$);
-    // this._errors = toSignal(this.computationS.error$);
+    this._duplicates = toSignal(this.fehS.duplicatedCards$);
+    this._missings = toSignal(this.fehS.missingCardsDataBase$);
+    this._computation = toSignal(this.computationS.callback$);
+    this._errors = toSignal(this.computationS.error$);
 
-    this._duplicates = this.fehS.duplicatedCards$;
-    this._missings = this.fehS.missingCardsDataBase$;
+    // this._duplicates = this.fehS.duplicatedCards$;
+    // this._missings = this.fehS.missingCardsDataBase$;
     // this.fehS.missingCardsDataBase$.subscribe((v) => {
     //   this._missings.set(v as any);
     // });
