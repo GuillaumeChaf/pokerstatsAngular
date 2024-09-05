@@ -1,12 +1,13 @@
 import { Component, Input, ModelSignal, Signal, computed, model } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { PlayerConfiguration } from 'src/app/models/player';
+import { NgClass } from '@angular/common';
+import { PlayerConfiguration } from 'src/app/models/player-configurations';
 
 @Component({
   selector: 'app-player-table-frame',
   standalone: true,
-  imports: [ReactiveFormsModule, CardComponent],
+  imports: [ReactiveFormsModule, CardComponent, NgClass],
   templateUrl: './player-table-frame.component.html',
   styleUrls: ['../player.component.scss', './player-table-frame.component.scss'],
 })

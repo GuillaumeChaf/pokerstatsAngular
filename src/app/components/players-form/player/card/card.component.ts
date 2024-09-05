@@ -3,7 +3,7 @@ import { Component, Input, Signal, TemplateRef, ViewChild, ViewContainerRef, com
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Card, Symbol } from 'src/app/models/card';
 import { cardValueConfig, defaultPopupPosition, popUpSize, symbolConfig } from 'src/app/models/card-configurations';
-import { PlayerConfiguration } from 'src/app/models/player';
+import { PlayerConfiguration } from 'src/app/models/player-configurations';
 import { CardService } from 'src/app/services/card.service';
 
 @Component({
@@ -32,6 +32,10 @@ export class CardComponent implements ControlValueAccessor {
   }
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+  isDisabled = false;
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
   //#endregion
   /** service de gestion des cartes */
@@ -68,6 +72,7 @@ export class CardComponent implements ControlValueAccessor {
   @ViewChild('popUpContainer', { read: ViewContainerRef }) popUpContainer!: ViewContainerRef;
 
   changeStatePopUp(e: any) {
+    if (this.isDisabled) return;
     this.cardS.changeStatePopUp(this.popUpContainer, this.popUpTemplate);
     e.stopPropagation();
   }

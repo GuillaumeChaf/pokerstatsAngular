@@ -1,0 +1,12 @@
+<div id="body">
+  @for(card of cardsDisplayed(); track card.id ){
+  <app-card-rd [card]="card"> </app-card-rd>
+  } @if(cardOverflow()){
+  <div id="body-crd">
+    <svg [attr.viewBox]="'0 0 448 512'" id="card-symb" [style.color]="'#757575'">
+      <use [attr.xlink:href]="'assets/svg/symbols/plus.svg#body'"></use>
+    </svg>
+    <h6 id="card-val" class="width-fill-a">{{ cardOverflow() }}</h6>
+  </div>
+  }
+</div>

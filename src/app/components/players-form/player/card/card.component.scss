@@ -3,20 +3,24 @@
 //#region visuel de la carte
 #body {
   background-color: $almost-white;
+  border: solid 3px rgba($main-grey, 0);
   width: 45px;
   height: 67px;
   position: relative;
-  border: solid 3px rgba($main-grey, 0);
   cursor: pointer;
   display: flex;
   padding: 2px;
   &:hover {
     border: solid 3px $main-grey-hover;
   }
+  &.disabled {
+    border: solid 3px rgba($main-grey, 0);
+    cursor: default;
+  }
 }
 #card-undefined {
   margin: auto;
-  color: $main-color;
+  color: $blue;
   font-size: 1.4rem;
 }
 #card-symb {
@@ -33,6 +37,7 @@
   margin: 0;
   font-family: system-ui;
   font-size: 2rem;
+  line-height: 2rem;
 }
 //#endregion
 //#region popUp
@@ -55,7 +60,7 @@
 .svg-btn {
   width: 22px;
   height: 22px;
-  border: solid 1px $main-color;
+  border: solid 1px $blue;
   padding: 3px;
   display: flex;
   justify-content: center;
@@ -67,7 +72,7 @@
   }
 }
 .svg-btn.activ {
-  background-color: $main-color;
+  background-color: $blue;
   span,
   svg {
     color: white !important;

@@ -1,0 +1,25 @@
+@import 'src/assets/styles/graphic-chart.scss';
+
+#body-crd {
+  height: 28px;
+  width: 17px;
+  background-color: $almost-white;
+  border-radius: 2px;
+  padding: 2px 2px 1px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  h6 {
+    text-align: center;
+    width: 100%;
+    font-family: system-ui;
+    font-weight: 500;
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
+  }
+  svg {
+    width: 11px;
+    height: 11px;
+  }
+}

@@ -1,12 +1,13 @@
-<form [formGroup]="playerForm" class="fill rounded">
+<form [formGroup]="playerForm" class="fill rounded" [ngClass]="{ activ: this.activState() }">
   <header>
-    <span>{{ this.conf.name }}</span>
+    <h3>{{ this.conf.name }}</h3>
     <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
       <svg viewBox="0 0 448 512" class="fill">
         <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
       </svg>
     </button>
   </header>
+  <hr class="m-0" />
   <section>
     <app-card formControlName="card1" [conf]="conf" />
     <app-card formControlName="card2" [conf]="conf" />

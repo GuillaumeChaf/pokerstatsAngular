@@ -1,14 +1,30 @@
 form {
-  background-color: white;
+  background-color: #b7b7b7;
   position: relative;
   padding: 0.35rem;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  opacity: 0.8;
+  &.activ {
+    opacity: 1;
+    background-color: white;
+  }
 }
 header {
   display: flex;
   justify-content: space-between;
+  align-items: end;
+  h3 {
+    font-weight: 500;
+    margin: 0;
+    color: #063c69;
+    height: 16px;
+    line-height: 16px;
+  }
+  hr {
+    border-width: 2px;
+  }
 }
 section {
   display: flex;

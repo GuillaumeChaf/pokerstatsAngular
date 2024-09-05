@@ -1,4 +1,4 @@
-<div id="body" (click)="changeStatePopUp($event)" class="rounded">
+<div id="body" (click)="changeStatePopUp($event)" class="rounded" [ngClass]="{ disabled: this.isDisabled }">
   @if(ngModel()?.isComplete()){
   <svg attr.viewBox="{{ ngMSymbolConfig()?.viewBox }}" id="card-symb" style.color="{{ ngMSymbolConfig()?.color }}">
     <use attr.xlink:href="{{ 'assets/svg/symbols/' + ngMSymbolConfig()?.svgPath + '.svg#body' }}"></use>

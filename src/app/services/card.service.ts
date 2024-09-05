@@ -24,6 +24,7 @@ export class CardService {
   //#endregion
 
   //#region gestion des doublons de carte
+  /** enregistrement des cartes sélectionnés par l'utilisateur */
   cardDataBase$: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>([]);
 
   /** enregistrement d'une nouvelle carte dans la base */
@@ -32,5 +33,6 @@ export class CardService {
     this.cardDataBase$.next([...this.cardDataBase$.value.filter((w) => w.id !== newCard.id), newCard]);
     return newCard;
   }
+
   //#endregion
 }

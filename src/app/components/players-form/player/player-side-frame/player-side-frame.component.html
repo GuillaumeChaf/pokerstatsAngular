@@ -1,20 +1,48 @@
-<form [formGroup]="playerForm" id="body" class="fill">
-  <span>{{ this.conf.name }}</span>
+<form [formGroup]="playerForm" id="body" class="fill" [ngClass]="{ activ: this.activState() }">
+  <header>
+    <h3>{{ this.conf.name }}</h3>
+    <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
+      <svg viewBox="0 0 448 512" class="fill">
+        <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
+      </svg>
+    </button>
+  </header>
 
-  <!-- <input formControlName="condition" />
-  <input formControlName="suit" /> -->
-  <mat-form-field>
-    <mat-label>Favorite food</mat-label>
-    <mat-select [formControl]="suit">
-      @for (item of combinationList; track item) {
-      <mat-option [value]="item">{{ item }}</mat-option>
+  <div id="body-form">
+    <label>Condtion de calcul : </label>
+    <mat-button-toggle-group [formControl]="condition" [hideSingleSelectionIndicator]="true" id="conditions-group">
+      @for(cond of conditionsList | keyvalue : orderFnc; track cond.value){
+      <mat-button-toggle
+        class="mat-button-toggle"
+        [value]="cond.value.value"
+        [ngClass]="{ active: activeSig() === cond.value.value }"
+        [style.backgroundColor]="activeSig() === cond.value.value ? cond.value.color : mainGrey"
+      >
+        <svg attr.viewBox="{{ cond.value.viewBox }}" style.color="{{ activeSig() === cond.value.value ? 'white' : cond.value.color }}">
+          <use attr.xlink:href="{{ 'assets/svg/finish-conditions/' + cond.value.value + '.svg#body' }}"></use>
+        </svg>
+      </mat-button-toggle>
       }
-    </mat-select>
-  </mat-form-field>
+    </mat-button-toggle-group>
 
-  <button class="btn-activ-state svg-btn" type="button" (click)="activState.set(!activState())">
-    <svg viewBox="0 0 448 512" class="fill">
-      <use attr.xlink:href="{{ this.activBtnSvgSig() }}"></use>
-    </svg>
-  </button>
+    <label for="dropdown">Conbinaison finale :</label>
+    <div class="select" (click)="openClose($event)" [ngClass]="{ disabled: this.playerForm.disabled }">
+      <select class="select-selected"></select>
+      <label> {{ selectedOption.label }}</label>
+
+      <div class="select-items" [ngClass]="{ 'select-hide': !dropdownOpenSig() }">
+        @for (item of combinationDP | keyvalue : orderFnc; track item.key) {
+        <div class="option" (click)="select(item.value)">{{ item.value.label }}</div>
+        }
+      </div>
+    </div>
+    <span id="result">{{ statsString }}</span>
+  </div>
+  <app-player-outs-frame
+    [conf]="conf"
+    [outs]="outs"
+    [ngStyle]="{ right: conf.outsR ? '100%' : undefined, left: conf.outsR ? undefined : '100%' }"
+    [style.bottom.px]="0"
+  >
+  </app-player-outs-frame>
 </form>

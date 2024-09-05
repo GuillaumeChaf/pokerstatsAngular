@@ -1,8 +1,38 @@
-<div id="body" class="fill">
-  @for(card of duplicatedCards$ | async; track card.id){
-  <p class="m-0">{{ card.uniqueValue }}</p>
-  }@empty {
-  <span> Aucune carte n'est en double </span>
-  }
-  <button type="submit">submit</button>
+<div id="body" class="fill" [ngClass]="{ error: this.parentFormGroup.invalid, noError: this.parentFormGroup.valid }">
+  @switch(tplDisplate()){ @case ('userError'){
+  <div id="error-body" *ngLet="duplicatedCards$ | async as duplicatedCards">
+    @if(duplicatedCards?.length){
+    <span class="error-msg">- Certaines cartes sont en double : </span>
+    <div class="card-list">
+      @for(card of duplicatedCards; track card.id){
+      <app-card-rd [card]="card"></app-card-rd>
+      }
+    </div>
+    } @for(error of missingCardsMsg$ | async | keyvalue; track error.key){
+    <span class="error-msg">- {{ error.value }}</span
+    ><br />
+    }
+  </div>
+  <!-- </ng-container> -->
+  } @case ('noError'){
+  <span class="success-msg">Aucune erreur n'est présente, le calcul peut s'effectuer.</span>
+  } @case ('pending'){ Ba on attend... } @case ('computationError'){ } @case ('submit'){
+  <div id="split" *ngLet="test as compute">
+    <!-- <div id="split" *ngLet="(computationCallback$ | async)?.split as compute"> -->
+    <h4 class="mb-1">Partage :</h4>
+    <h1>{{ compute?.statPerc }} %</h1>
+    @if(compute?.outs?.length){
+    <p>Carte(s) requise(s) :</p>
+    <div class="card-list">
+      @for(card of compute?.outs; track card.id){
+      <app-card-rd [card]="card"></app-card-rd>
+      }
+    </div>
+    }
+  </div>
+  } }
+  <div id="submit-body">
+    <hr />
+    <button id="submit-btn" type="submit" [disabled]="this.parentFormGroup.invalid" mat-raised-button>Calculer</button>
+  </div>
 </div>

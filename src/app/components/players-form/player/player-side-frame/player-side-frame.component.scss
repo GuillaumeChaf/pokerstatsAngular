@@ -1,4 +1,134 @@
-#body{
-    background-color: rgba(255, 186, 57, 0.788);
-    border: solid 1px orange;
+@import 'src/assets/styles/graphic-chart.scss';
+
+$main-color: #eaeaea;
+
+#body {
+  background-color: #eaeaea;
+  border: solid 1px #eaeaea;
+  opacity: 0.3;
+  &.activ {
+    border: solid 1px $blue;
+    opacity: 1;
+  }
+}
+header {
+  background-color: rgba($blue, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px;
+  h3 {
+    font-weight: 500;
+    margin: 0;
+    color: $blue;
+  }
+}
+
+#body-form {
+  padding: 6px 4px 2px 4px;
+}
+
+//#region sélecteurs
+mat-button-toggle-group {
+  width: 100%;
+  border-color: rgba(255, 255, 255, 0);
+}
+mat-button-toggle {
+  width: 33.33%;
+  border-color: $main-color !important;
+}
+.select {
+  width: 100%;
+  background-color: $main-grey;
+  border-radius: 4px;
+  border: none;
+  color: #063c69;
+  outline: unset;
+  .option {
+    color: rgb(107 107 107);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
+label {
+  color: #676767;
+  font-size: 13px;
+}
+//#endregion
+
+.select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  &.disabled {
+    select {
+      cursor: default;
+    }
+    label {
+      cursor: default;
+    }
+  }
+  label {
+    padding: 1px 4px;
+    font-weight: 500;
+    z-index: 2;
+    color: $blue;
+    position: relative;
+    cursor: pointer;
+  }
+  select {
+    position: absolute;
+    border-radius: 4px;
+    background-color: $main-grey;
+    color: $blue;
+    width: 100%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.select-items {
+  position: absolute;
+  background-color: white;
+  z-index: 99;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+}
+
+.select-hide {
+  display: none;
+}
+
+.select-items div {
+  font-weight: 500;
+  padding: 1px 4px;
+  cursor: pointer;
+}
+
+.select-items div:hover {
+  background-color: rgba($main-grey, 0.5);
+  color: black;
+}
+#result {
+  width: 100%;
+  display: block;
+  font-size: 22px;
+  text-align: end;
+  padding: 10px 0;
+  font-weight: 600;
+  color: #142b3f;
+}
+form {
+  position: relative;
+}
+app-player-outs-frame {
+  position: absolute;
+  z-index: 1;
 }

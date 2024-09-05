@@ -1,46 +1,59 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { filter, map } from 'rxjs';
+import { AsyncPipe, KeyValuePipe, NgClass } from '@angular/common';
+import { Component, inject, Signal } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Card } from 'src/app/models/card';
-import { CardService } from 'src/app/services/card.service';
+import { CardRdComponent } from '../../players-form/player/card/card-rd/card-rd.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ControlContainer, FormGroup } from '@angular/forms';
+import { FormErrorHandlerService } from 'src/app/services/form-error-handler.service';
+import { NgLetModule } from 'ng-let';
+import { ComputationService } from 'src/app/services/computation.service';
+import StatForm from 'src/app/models/stats-callback';
+import { DisplayService, submitTpl } from 'src/app/services/display.service';
 
 @Component({
   selector: 'app-submit-form',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [MatButtonModule, NgLetModule, CardRdComponent, NgClass, AsyncPipe, KeyValuePipe],
   templateUrl: './submit-form.component.html',
   styleUrl: './submit-form.component.scss',
 })
 export class SubmitFormComponent {
-  /** provider de service de carte */
-  cardS = inject(CardService);
-  /** calcul des cartes dupliuées par rapport à toute les cartes */
-  duplicatedCards$: Observable<Card[]> = this.cardS.cardDataBase$.pipe(
-    map((v) => v.filter((w) => w != null && w.isComplete())),
-    map((v) => this.getDuplicates(v)),
-  );
+  //#region récupération du formulaire parent
+  parentContainer = inject(ControlContainer);
+  get parentFormGroup() {
+    return this.parentContainer.control as FormGroup;
+  }
+  //#endregion
+  //#region gestion des messages d'erreurs
+  /** instance du service de gestion d'erreur */
+  fehS = inject(FormErrorHandlerService);
+  /** base de données des cartes sélectionnées */
+  duplicatedCards$!: Observable<Card[]>;
+  /** observable écoutant les messages d'erreurs */
+  missingCardsMsg$!: Observable<{ [key: string]: string }>;
+  //#endregion
+  //#region gestion de l'affichage des données de split
+  /** instance du service de calcul */
+  computationS = inject(ComputationService);
+  /** retour de calcul */
+  computationCallback$: Subject<StatForm | null>;
+  //#endregion
+  displayS = inject(DisplayService);
+  /** template affiché dans le cadre */
+  tplDisplate!: Signal<submitTpl>;
 
-  /**
-   * algorithme d'isolation des doublons de la liste en paramètre
-   * @param cards la liste a analysé
-   */
-  getDuplicates(cards: Card[]): Card[] {
-    const seen = new Map<string, boolean>();
-    const duplicates: Card[] = [];
+  test = {
+    statPerc: 66.7,
+    outs: [Card.createCard({ value: 5, symbol: 2 } as Card), Card.createCard({ value: 4, symbol: 3 } as Card)],
+  };
 
-    for (const item of cards) {
-      const key = item.uniqueValue;
-
-      if (seen.has(key)) {
-        if (!seen.get(key)) {
-          duplicates.push(item);
-          seen.set(key, true);
-        }
-      } else {
-        seen.set(key, false);
-      }
-    }
-    return duplicates;
+  //#endregion
+  constructor() {
+    this.duplicatedCards$ = this.fehS.duplicatedCards$;
+    this.missingCardsMsg$ = this.fehS.missingCardsDataBase$;
+    this.computationCallback$ = this.computationS.callback$;
+    this.tplDisplate = this.displayS.displayState;
   }
 }

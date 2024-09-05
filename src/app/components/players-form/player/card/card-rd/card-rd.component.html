@@ -1,0 +1,6 @@
+<div id="body-crd">
+  <svg attr.viewBox="{{ ngMSymbolConfig()?.viewBox }}" id="card-symb" style.color="{{ ngMSymbolConfig()?.color }}">
+    <use attr.xlink:href="{{ 'assets/svg/symbols/' + ngMSymbolConfig()?.svgPath + '.svg#body' }}"></use>
+  </svg>
+  <h6 id="card-val" class="width-fill-a">{{ ngMValueConfig()?.label }}</h6>
+</div>
