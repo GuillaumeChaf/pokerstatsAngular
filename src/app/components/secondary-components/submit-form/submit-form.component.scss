@@ -64,3 +64,16 @@ hr {
   font-weight: 500;
   color: #424242;
 }
+#pending-body {
+  width: 100%;
+  display: flex;
+  margin-top: 3rem;
+  object {
+    margin: auto;
+    width: 4rem;
+    height: 4rem;
+  }
+  svg {
+    color: white;
+  }
+}

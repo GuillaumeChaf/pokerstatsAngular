@@ -11,7 +11,7 @@ export class ComputationService {
   /** instances de service */
   private _httpClient = inject(HttpClient);
   /** retour de statistique */
-  callbackSig: WritableSignal<StatForm | null> = signal(null);
+  callbackSig: WritableSignal<StatForm | null> = signal({} as StatForm);
   /** retour d'erreur */
   errorSig: WritableSignal<string | null> = signal(null);
 

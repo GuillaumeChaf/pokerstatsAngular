@@ -9,18 +9,20 @@
       }
     </div>
     } @for(error of missingCardsMsgSig() | keyvalue; track error.key){
-    <span class="error-msg">- {{ error.value }}</span
-    ><br />
+    <span class="error-msg">- {{ error.value }}</span>
     }
   </div>
   <!-- </ng-container> -->
   } @case ('noError'){
-  <span class="success-msg">Aucune erreur n'est présente, le calcul peut s'effectuer.</span>
-  } @case ('pending'){ Ba on attend... } @case ('computationError'){ } @case ('submit'){
-  <div id="split" *ngLet="test as compute">
-    <!-- <div id="split" *ngLet="(computationCallback$ | async)?.split as compute"> -->
+  <span class="success-msg">Aucune erreur n'est présente, le calcul peut s'effectuer.</span>} @case ('pending'){
+  <div id="pending-body">
+    <object type="image/svg+xml" data="assets/svg/display/spinner.svg"></object>
+  </div>
+  } @case ('computationError'){<span> erreur </span>
+  } @case ('submit'){
+  <div id="split" *ngLet="computationCallbackSig()?.split as compute">
     <h4 class="mb-1">Partage :</h4>
-    <h1>{{ compute?.statPerc }} %</h1>
+    <h1>{{ compute?.statPerc }}</h1>
     @if(compute?.outs?.length){
     <p>Carte(s) requise(s) :</p>
     <div class="card-list">

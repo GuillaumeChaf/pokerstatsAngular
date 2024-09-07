@@ -11,10 +11,14 @@ export class FormErrorHandlerService {
   /** provider du service de carte */
   private _cardS = inject(CardService);
 
+  missingCardsDataBase$ = new BehaviorSubject<Card[]>([]);
+
   //#region erreur lié à la duplication de carte
   duplicatedCardsSig: Signal<Card[]> = computed(() => {
     const cards = this._cardS.cardDataBaseSig().filter((w) => w != null && w.isComplete());
-    return this.getDuplicates(cards);
+    const duplicates = this.getDuplicates(cards);
+    this.missingCardsDataBase$.next(duplicates);
+    return duplicates;
   });
 
   /**
@@ -41,7 +45,6 @@ export class FormErrorHandlerService {
   }
   //#endregion
   //#region liés aux cartes manquante chez des joueurs actifs
-  // missingCardsDataBase$ = new BehaviorSubject<ValidationErrors>({});
   missingCardsDataBaseSig: WritableSignal<ValidationErrors> = signal({});
 
   /**

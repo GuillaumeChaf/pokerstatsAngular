@@ -7,7 +7,7 @@ import { headerHeight } from './models/player-configurations';
 import { CardService } from './services/card.service';
 import { ComputationService } from './services/computation.service';
 import { ComputePrompt } from './models/compute-prompt';
-import { catchError, map, Observable, of, take } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, map, Observable, of, take } from 'rxjs';
 import { FormErrorHandlerService } from './services/form-error-handler.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Card } from './models/card';
@@ -24,7 +24,6 @@ export class AppComponent {
   private _cardS = inject(CardService);
   private _fehS = inject(FormErrorHandlerService);
   private _computationS = inject(ComputationService);
-  private _injector = inject(Injector);
   //#endregion
 
   /** formulaire rassemblant les cartes et les différentes données de tous les joueurs */
@@ -32,12 +31,8 @@ export class AppComponent {
   /** hauteur du header configuré en pixels */
   headerHeight: number = headerHeight;
 
-  /** injecteur obligatoire pour la fonction toObservable */
-  duplicatedCards$!: Observable<Card[]>;
-
-  constructor() {
-    this.duplicatedCards$ = toObservable(this._fehS.duplicatedCardsSig, { injector: this._injector });
-  }
+  /** observable des cartes dupliqués pour les validateurs */
+  duplicatedCards$: BehaviorSubject<Card[]> = this._fehS.missingCardsDataBase$;
 
   ngOnInit() {
     this.initForm();
@@ -48,8 +43,9 @@ export class AppComponent {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.duplicatedCards$.pipe(
         take(1),
-        map((value) => (value.length ? { duplicates: `${value.length} cartes sont en double` } : null)),
-        catchError(() => of(null)),
+        map((value) => {
+          return value.length ? { duplicates: `${value.length} cartes sont en double` } : null;
+        }),
       );
     };
   }
@@ -57,6 +53,7 @@ export class AppComponent {
   /** initialisation du formulaire */
   initForm() {
     this.form = new FormGroup({}, undefined, this.getDuplicateValidator());
+    this._fehS.missingCardsDataBase$.subscribe(() => this.form.updateValueAndValidity({ onlySelf: true, emitEvent: false }));
   }
 
   /** validation du formulaire */
