@@ -1,5 +1,70 @@
-#body{
-    background-color: rgba(255, 239, 96, 0.849);
-    border: solid 1px rgb(255, 239, 96);
- 
+@import 'src/assets/styles/graphic-chart.scss';
+
+#body {
+  background-color: rgb(232 244 255);
+  border: solid 2px #063c69;
+  padding: 0.25rem;
 }
+
+//#region code par balise html
+section {
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  > *:not(h4) {
+    margin-left: 0.2rem;
+  }
+}
+svg {
+  min-width: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+p {
+  color: $grey-msg;
+  font-weight: 500;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.1rem;
+}
+li {
+  list-style-type: none;
+}
+h4 {
+  line-height: 1rem;
+  color: $blue;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+//#endregion
+//#region code plus précis via id
+section {
+  &#condition {
+    svg {
+      margin-right: 0.2rem;
+    }
+    li > p {
+      line-height: 1.3rem;
+    }
+  }
+  &#players {
+    svg {
+      display: inline-block;
+      color: $blue;
+      &:last-child {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
+#exemple {
+  margin-top: 0.5rem;
+  svg {
+    display: inline-block;
+  }
+  strong {
+    margin-right: 0.25rem;
+  }
+}
+//#endregion

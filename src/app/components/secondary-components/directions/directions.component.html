@@ -1,1 +1,45 @@
-<div id="body" class="fill">directions</div>
+<div id="body" class="fill">
+  <section class="d-flex" id="players">
+    <p>
+      <svg [attr.viewBox]="'0 0 512 512'">
+        <use attr.xlink:href="{{ 'assets/svg/activation-states/square-plus.svg#body' }}"></use>
+      </svg>
+      <svg [attr.viewBox]="'0 0 512 512'">
+        <use attr.xlink:href="{{ 'assets/svg/activation-states/square-minus.svg#body' }}"></use>
+      </svg>
+      {{ addDelLegend }}
+    </p>
+  </section>
+  <!-- <section>
+    <div>Carte</div>
+    <p>{{ selectionCardLegend }}</p>
+  </section> -->
+  <section id="condition">
+    <h4>Condition de calcul</h4>
+    <p>{{ conditionLegend }}</p>
+    <div>
+      @for(cond of conditions | keyvalue : orderFnc; track cond.key; ){
+      <li class="d-flex">
+        <svg attr.viewBox="{{ cond.value.viewBox }}" style.color="{{ cond.value.color }}">
+          <use attr.xlink:href="{{ 'assets/svg/finish-conditions/' + cond.value.value + '.svg#body' }}"></use>
+        </svg>
+        <p [innerHTML]="cond.value.legend"></p>
+      </li>
+      }
+    </div>
+  </section>
+  <section>
+    <h4>Combinaison finale (CF)</h4>
+    <p [innerHTML]="finalCombinationLegend"></p>
+    <div id="exemple">
+      <p>
+        <strong> Exemple : </strong>
+        <svg [attr.viewBox]="'0 0 512 512'" attr.viewBox="{{ conditions.finish.viewBox }}" style.color="{{ conditions.finish.color }}">
+          <use attr.xlink:href="{{ 'assets/svg/finish-conditions/finish.svg#body' }}"></use>
+        </svg>
+        + Brelan <br />
+        <em> Probabilité de finir avec un brelan </em>
+      </p>
+    </div>
+  </section>
+</div>
