@@ -2,6 +2,7 @@
 
 $main-color: #eaeaea;
 
+//#region global
 #body {
   background-color: #eaeaea;
   border: solid 1px #eaeaea;
@@ -27,7 +28,7 @@ header {
 #body-form {
   padding: 6px 4px 2px 4px;
 }
-
+//#endregion
 //#region sélecteurs
 mat-button-toggle-group {
   width: 100%;
@@ -116,19 +117,29 @@ label {
   background-color: rgba($main-grey, 0.5);
   color: black;
 }
-#result {
-  width: 100%;
-  display: block;
-  font-size: 22px;
-  text-align: end;
-  padding: 10px 0;
-  font-weight: 600;
-  color: #142b3f;
-}
+
 form {
   position: relative;
 }
 app-player-outs-frame {
   position: absolute;
   z-index: 1;
+}
+#computation-section {
+  width: 100%;
+  padding-top: 5px;
+  display: flex;
+  #result {
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 22px;
+    text-align: end;
+    font-weight: 600;
+    color: #142b3f;
+  }
+  #pending-icon {
+    margin: 0 0.5rem 0 auto;
+    width: 2rem;
+    height: 2rem;
+  }
 }

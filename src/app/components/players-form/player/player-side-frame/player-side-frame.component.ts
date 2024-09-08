@@ -27,6 +27,7 @@ import { Subject, Subscription } from 'rxjs';
 import { Combination, combinationDP, combinationDPConfig } from 'src/app/models/combinations';
 import { PlayerOutsFrameComponent } from '../player-outs-frame/player-outs-frame.component';
 import { Card } from 'src/app/models/card';
+import { DisplayService } from 'src/app/services/display.service';
 
 @Component({
   selector: 'app-player-side-frame',
@@ -58,6 +59,7 @@ export class PlayerSideFrameComponent implements OnInit {
   //#region variables liées au retour de résultat
   /** service dédié à l'envoie de calcul vers l'api */
   computationS = inject(ComputationService);
+  displayS = inject(DisplayService);
   /** observable qui va écouter le retour de calcul */
   computationCallbackSig!: WritableSignal<StatForm | null>;
   /** variable enregistrant la statistique à afficher */

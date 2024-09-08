@@ -16,25 +16,28 @@
   } @case ('noError'){
   <span class="success-msg">Aucune erreur n'est présente, le calcul peut s'effectuer.</span>} @case ('pending'){
   <div id="pending-body">
-    <object type="image/svg+xml" data="assets/svg/display/spinner.svg"></object>
+    <object type="image/svg+xml" data="assets/svg/display/spinner-white.svg"></object>
   </div>
-  } @case ('computationError'){<span> erreur </span>
+  } @case ('computationError'){<span class="error-msg"> Une erreur serveur est survenue </span>
   } @case ('submit'){
-  <div id="split" *ngLet="computationCallbackSig()?.split as compute">
+  <div id="split" *ngLet="computationCallbackSig() as compute">
     <h4 class="mb-1">Partage :</h4>
-    <h1>{{ compute?.statPerc }}</h1>
-    @if(compute?.outs?.length){
+    <h1>{{ compute?.split?.statPerc }}</h1>
+    @if(compute?.split?.outs?.length){
     <p>Carte(s) requise(s) :</p>
     <div class="card-list">
-      @for(card of compute?.outs; track card.id){
+      @for(card of compute?.split?.outs; track card.id){
       <app-card-rd [card]="card"></app-card-rd>
       }
     </div>
     }
+    <em> {{ compute?.combinationsNbToString }} combinaisons calculées en {{ compute?.secondary?.computationTime }} sec</em>
   </div>
   } }
   <div id="submit-body">
     <hr />
-    <button id="submit-btn" type="submit" [disabled]="this.parentFormGroup.invalid" mat-raised-button>Calculer</button>
+    <button id="submit-btn" type="submit" [disabled]="this.parentFormGroup.invalid || tplDisplateSig() === 'pending'" mat-raised-button>
+      Calculer
+    </button>
   </div>
 </div>

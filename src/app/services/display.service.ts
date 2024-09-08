@@ -38,6 +38,7 @@ export class DisplayService {
     const computationState: computationState = this._computationStateSig();
     const displayCurr: submitTpl = this._currDisplayState;
     return stateCalculator[displayCurr](userError, computationState);
+    // return 'pending';
   });
 
   constructor() {

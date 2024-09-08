@@ -59,6 +59,9 @@ $error-color: #451616;
       color: $error-color;
     }
   }
+  em {
+    font-size: 0.8rem;
+  }
 }
 hr {
   color: $error-color;

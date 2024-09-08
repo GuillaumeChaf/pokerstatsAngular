@@ -9,25 +9,44 @@ export default class StatForm {
     stat: number;
     statPerc: string;
   };
+  /** données secondaires */
+  secondary: secondaryComputeData;
 
-  constructor({ players, split, combinations }: statsCallback) {
+  get combinationsNbToString(): string {
+    return this.numberFormated(this.secondary.combinations);
+  }
+
+  constructor({ players, split, secondary }: statsCallback) {
     for (const key in players) {
       const { stat, outs } = players[key];
       this.players[key] = {
         stat: stat,
         outs: outs?.map((v) => Card.createCard(v)) ?? [],
-        statPerc: this.getStatperc(stat, combinations),
+        statPerc: this.getStatperc(stat, secondary.combinations),
       };
     }
     this.split = {
       outs: split?.winSplitOuts?.map((v) => Card.createCard(v)) ?? [],
       stat: split.winSplit,
-      statPerc: this.getStatperc(split.winSplit, combinations),
+      statPerc: this.getStatperc(split.winSplit, secondary.combinations),
     };
+    this.secondary = secondary;
   }
 
   getStatperc(n: number, total: number): string {
     return Math.round((n / total) * 10000) / 100 + ' %';
+  }
+
+  numberFormated(computationTime: number): string {
+    const numberToArr: string[] = computationTime.toString().split('').reverse();
+    const separate: string[] = [
+      ...numberToArr.slice(6).reverse(),
+      ' ',
+      ...numberToArr.slice(3, 6).reverse(),
+      ' ',
+      ...numberToArr.slice(0, 3).reverse(),
+    ];
+    return separate.join('');
   }
 }
 
@@ -46,7 +65,14 @@ export type statsCallback = {
   /** résultat concernant la victoire partagé */
   split: winSplit;
   /** nombre de combinaison totale calculée */
+  secondary: secondaryComputeData;
+};
+
+export type secondaryComputeData = {
+  /** nombre de combinaison totale calculée */
   combinations: number;
+  /** temps de calcul en millisecondes */
+  computationTime: number;
 };
 
 export type winSplit = {

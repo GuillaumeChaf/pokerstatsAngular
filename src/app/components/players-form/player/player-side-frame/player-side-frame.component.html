@@ -36,7 +36,13 @@
         }
       </div>
     </div>
-    <span id="result">{{ statsStrSig() }}</span>
+    <div id="computation-section">
+      @if(displayS.displayStateSig() === 'pending' && this.activState()){
+      <object id="pending-icon" type="image/svg+xml" data="assets/svg/display/spinner-blue.svg"></object>
+      }@else{
+      <span id="result">{{ statsStrSig() }}</span>
+      }
+    </div>
   </div>
   <app-player-outs-frame
     [conf]="conf"
