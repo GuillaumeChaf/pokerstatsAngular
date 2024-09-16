@@ -44,11 +44,7 @@
       }
     </div>
   </div>
-  <app-player-outs-frame
-    [conf]="conf"
-    [outs]="outsSig()"
-    [ngStyle]="{ right: conf.outsR ? '100%' : undefined, left: conf.outsR ? undefined : '100%' }"
-    [style.bottom.px]="0"
-  >
-  </app-player-outs-frame>
+  <div id="out-div" [ngStyle]="{ right: conf.outsR ? '100%' : undefined, left: conf.outsR ? undefined : '100%' }" [style.bottom.px]="0">
+    <out-list [outsSig]="outsSig()"> </out-list>
+  </div>
 </form>

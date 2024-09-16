@@ -22,12 +22,11 @@ import { AsyncPipe, KeyValue, KeyValuePipe, NgClass, NgStyle } from '@angular/co
 import { mainGrey } from 'src/assets/graphic-chart';
 import { PlayerConfiguration } from 'src/app/models/player-configurations';
 import { ComputationService } from 'src/app/services/computation.service';
-import StatForm, { statsCallback } from 'src/app/models/stats-callback';
-import { Subject, Subscription } from 'rxjs';
+import StatForm from 'src/app/models/stats-callback';
 import { Combination, combinationDP, combinationDPConfig } from 'src/app/models/combinations';
-import { PlayerOutsFrameComponent } from '../player-outs-frame/player-outs-frame.component';
 import { Card } from 'src/app/models/card';
 import { DisplayService } from 'src/app/services/display.service';
+import { OutListComponent } from '../card/out-list/out-list.component';
 
 @Component({
   selector: 'app-player-side-frame',
@@ -38,7 +37,7 @@ import { DisplayService } from 'src/app/services/display.service';
     MatInputModule,
     MatButtonToggleModule,
     ReactiveFormsModule,
-    PlayerOutsFrameComponent,
+    OutListComponent,
     NgClass,
     NgStyle,
     AsyncPipe,

@@ -3,7 +3,14 @@ export type condition = 'win' | 'finish' | 'lose';
 export type conditionConfig = { value: string; color: string; viewBox: string; title: string; order: number; legend: string };
 
 export const conditions: { [key in condition]: conditionConfig } = {
-  win: { value: 'win', color: '#2d972d', viewBox: '0 0 512 512', title: 'victoire', order: 0, legend: ' ... gagner avec la <strong>CF</strong>' },
+  win: {
+    value: 'win',
+    color: '#2d972d',
+    viewBox: '0 0 512 512',
+    title: 'victoire',
+    order: 0,
+    legend: ' ... gagner seul avec la <strong>CF</strong>',
+  },
   finish: {
     value: 'finish',
     color: '#db8546',

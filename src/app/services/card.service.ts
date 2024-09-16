@@ -12,6 +12,11 @@ export class CardService {
   /** référence ou dernière référence de la vue affiché */
   displayedViewRef?: ViewRef;
 
+  /**
+   * création/suppression de la popUp de pick de carte
+   * @param container container parent de la popUp
+   * @param template template de la popUp
+   */
   changeStatePopUp(container?: ViewContainerRef, template?: TemplateRef<any>) {
     this.displayedViewRef?.destroy();
     if (this.displayedTemplate === template || template == null) {

@@ -12,7 +12,6 @@
     <span class="error-msg">- {{ error.value }}</span>
     }
   </div>
-  <!-- </ng-container> -->
   } @case ('noError'){
   <span class="success-msg">Aucune erreur n'est présente, le calcul peut s'effectuer.</span>} @case ('pending'){
   <div id="pending-body">
@@ -23,12 +22,11 @@
   <div id="split" *ngLet="computationCallbackSig() as compute">
     <h4 class="mb-1">Partage :</h4>
     <h1>{{ compute?.split?.statPerc }}</h1>
+
     @if(compute?.split?.outs?.length){
-    <p>Carte(s) requise(s) :</p>
-    <div class="card-list">
-      @for(card of compute?.split?.outs; track card.id){
-      <app-card-rd [card]="card"></app-card-rd>
-      }
+    <div id="split-outs">
+      <p>Carte(s) requise(s) :</p>
+      <out-list [outsSig]="compute?.split?.outs ?? []" [maxCardsDisplayed]="9"> </out-list>
     </div>
     }
     <em> {{ compute?.combinationsNbToString }} combinaisons calculées en {{ compute?.secondary?.computationTime }} sec</em>

@@ -6,15 +6,15 @@ import { Card } from 'src/app/models/card';
 import { conditions } from 'src/app/models/conditions';
 import { PlayerConfiguration } from 'src/app/models/player-configurations';
 import { Combination } from 'src/app/models/combinations';
-import { PlayerOutsFrameComponent } from './player-outs-frame/player-outs-frame.component';
 import { getPlayerValidator } from 'src/app/models/player';
 import { FormErrorHandlerService } from 'src/app/services/form-error-handler.service';
 import { Subscription } from 'rxjs';
+import { OutListComponent } from './card/out-list/out-list.component';
 
 @Component({
   selector: 'app-player',
   standalone: true,
-  imports: [ReactiveFormsModule, PlayerSideFrameComponent, PlayerTableFrameComponent, PlayerOutsFrameComponent],
+  imports: [ReactiveFormsModule, PlayerSideFrameComponent, PlayerTableFrameComponent, OutListComponent],
   templateUrl: './player.component.html',
   styleUrl: './player.component.scss',
 })

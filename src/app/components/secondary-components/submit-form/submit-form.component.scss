@@ -26,12 +26,8 @@ $error-color: #451616;
   display: flex;
   flex-direction: column;
 }
-.card-list {
-  display: flex;
-  app-card-rd:not(:first-child) {
-    margin-left: 0.2rem;
-  }
-  margin-bottom: 0.2rem;
+#split-outs {
+  margin-bottom: 1.25rem;
 }
 #split {
   h1,

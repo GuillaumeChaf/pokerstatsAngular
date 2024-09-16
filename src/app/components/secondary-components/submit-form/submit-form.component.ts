@@ -10,11 +10,12 @@ import { ComputationService } from 'src/app/services/computation.service';
 import StatForm from 'src/app/models/stats-callback';
 import { DisplayService } from 'src/app/services/display.service';
 import { submitTpl } from 'src/app/models/display';
+import { OutListComponent } from '../../players-form/player/card/out-list/out-list.component';
 
 @Component({
   selector: 'app-submit-form',
   standalone: true,
-  imports: [MatButtonModule, NgLetModule, CardRdComponent, NgClass, AsyncPipe, KeyValuePipe],
+  imports: [MatButtonModule, NgLetModule, CardRdComponent, OutListComponent, NgClass, AsyncPipe, KeyValuePipe],
   templateUrl: './submit-form.component.html',
   styleUrl: './submit-form.component.scss',
 })

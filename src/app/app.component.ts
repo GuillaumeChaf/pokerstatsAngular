@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Injector } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { PlayersFormComponent } from './components/players-form/players-form.component';
 import { DirectionsComponent } from './components/secondary-components/directions/directions.component';
 import { SubmitFormComponent } from './components/secondary-components/submit-form/submit-form.component';
@@ -7,9 +7,8 @@ import { headerHeight } from './models/player-configurations';
 import { CardService } from './services/card.service';
 import { ComputationService } from './services/computation.service';
 import { ComputePrompt } from './models/compute-prompt';
-import { BehaviorSubject, catchError, firstValueFrom, map, Observable, of, take } from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { FormErrorHandlerService } from './services/form-error-handler.service';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { Card } from './models/card';
 
 @Component({
@@ -32,7 +31,7 @@ export class AppComponent {
   headerHeight: number = headerHeight;
 
   /** observable des cartes dupliqués pour les validateurs */
-  duplicatedCards$: BehaviorSubject<Card[]> = this._fehS.missingCardsDataBase$;
+  duplicatedCards$: BehaviorSubject<Card[]> = this._fehS.duplicatedCards$;
 
   ngOnInit() {
     this.initForm();
@@ -53,13 +52,13 @@ export class AppComponent {
   /** initialisation du formulaire */
   initForm() {
     this.form = new FormGroup({}, undefined, this.getDuplicateValidator());
-    this._fehS.missingCardsDataBase$.subscribe(() => this.form.updateValueAndValidity({ onlySelf: true, emitEvent: false }));
+    this._fehS.duplicatedCards$.subscribe(() => this.form.updateValueAndValidity({ onlySelf: true, emitEvent: false }));
   }
 
   /** validation du formulaire */
   submit() {
     if (this.form.valid) {
-      const obj = new ComputePrompt(this.form.value);
+      const obj = new ComputePrompt(this.form.value, this._cardS.cardDataBaseSig());
       this._computationS.compute(obj);
     }
   }

@@ -1,18 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PlayerOutsFrameComponent } from './player-outs-frame.component';
+import { OutListComponent } from './out-list.component';
 
 describe('PlayerOutsFrameComponent', () => {
-  let component: PlayerOutsFrameComponent;
-  let fixture: ComponentFixture<PlayerOutsFrameComponent>;
+  let component: OutListComponent;
+  let fixture: ComponentFixture<OutListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayerOutsFrameComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(PlayerOutsFrameComponent);
+      imports: [OutListComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(OutListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
