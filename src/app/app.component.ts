@@ -63,6 +63,13 @@ export class AppComponent {
     }
   }
 
+  /**
+   * lien vers linkedin
+   */
+  link() {
+    window.open('http://www.linkedin.com/in/guillaume-chafiol-915715177', '_blank');
+  }
+
   @HostListener('document:click')
   click() {
     this._cardS.changeStatePopUp(undefined, undefined);
