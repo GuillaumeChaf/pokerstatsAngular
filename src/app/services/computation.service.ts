@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { ComputePrompt } from '../models/compute-prompt';
 import StatForm, { statsCallback } from '../models/stats-callback';
-import { map, Subject } from 'rxjs';
+import { map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class ComputationService {
     this.errorSig.set(null);
     this.callbackSig.set(null);
     this._httpClient
-      .post<statsCallback>('http://localhost:3000/', inputs.formatToBack())
+      .post<statsCallback>(environment.domain, inputs.formatToBack())
+      // .post<statsCallback>('https://thepokerstatsapi.netlify.app/.netlify/functions/api', inputs.formatToBack())
       .pipe(map((v) => new StatForm(v)))
       .subscribe({
         next: (v: StatForm) => {
