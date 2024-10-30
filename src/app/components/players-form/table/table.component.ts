@@ -1,15 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../player/card/card.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [ReactiveFormsModule, CardComponent],
+  imports: [ReactiveFormsModule, NgOptimizedImage, CardComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent {
   //#region récupération du formulaire parent
   parentContainer = inject(ControlContainer);
   get parentFormGroup() {
@@ -23,9 +24,9 @@ export class TableComponent implements AfterViewInit {
   /** largeur calculé par rapport au ratio */
   widthSig: Signal<number> = computed(() => this.pictureheightSig() * this.pictureRatio);
   /** élément de l'image */
-  @ViewChild('picture') picture?: ElementRef<HTMLPictureElement>;
+  // @ViewChild('picture') picture?: ElementRef<HTMLPictureElement>;
 
-  ngAfterViewInit() {
-    this.pictureheightSig.set(this.picture?.nativeElement?.clientHeight ?? 800);
-  }
+  // ngAfterViewInit() {
+  //   this.pictureheightSig.set(this.picture?.nativeElement?.clientHeight ?? 800);
+  // }
 }
