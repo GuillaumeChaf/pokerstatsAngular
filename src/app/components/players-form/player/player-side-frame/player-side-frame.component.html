@@ -9,7 +9,7 @@
   </header>
 
   <div id="body-form">
-    <label>Condtion de calcul : </label>
+    <label>Condition de calcul : </label>
     <mat-button-toggle-group [formControl]="condition" [hideSingleSelectionIndicator]="true" id="conditions-group">
       @for(cond of conditionsList | keyvalue : orderFnc; track cond.value){
       <mat-button-toggle
@@ -25,7 +25,7 @@
       }
     </mat-button-toggle-group>
 
-    <label for="dropdown">Conbinaison finale :</label>
+    <label for="dropdown">Combinaison finale :</label>
     <div class="select" (click)="openClose($event)" [ngClass]="{ disabled: this.playerForm.disabled }">
       <select class="select-selected"></select>
       <label> {{ selectedOption.label }}</label>
