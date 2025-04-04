@@ -1,4 +1,4 @@
-import { Component, computed, input, Input, Signal } from '@angular/core';
+import { Component, computed, input, Signal } from '@angular/core';
 import { Card } from 'src/app/models/card';
 import { cardValueConfig, symbolConfig } from 'src/app/models/card-configurations';
 

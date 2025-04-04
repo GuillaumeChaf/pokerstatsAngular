@@ -1,6 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { CardService } from '../services/card.service';
-import { inject } from '@angular/core';
 
 export class Card {
   id?: string;

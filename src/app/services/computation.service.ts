@@ -22,7 +22,6 @@ export class ComputationService {
     this.callbackSig.set(null);
     this._httpClient
       .post<statsCallback>(environment.domain, inputs.formatToBack())
-      // .post<statsCallback>('https://thepokerstatsapi.netlify.app/.netlify/functions/api', inputs.formatToBack())
       .pipe(map((v) => new StatForm(v)))
       .subscribe({
         next: (v: StatForm) => {
