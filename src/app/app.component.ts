@@ -2,7 +2,6 @@ import { Component, HostListener, inject } from '@angular/core';
 import { PlayersFormComponent } from './components/players-form/players-form.component';
 import { DirectionsComponent } from './components/secondary-components/directions/directions.component';
 import { SubmitFormComponent } from './components/secondary-components/submit-form/submit-form.component';
-import { AbstractControl, AsyncValidatorFn, FormGroup, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { headerHeight } from './models/player-configurations';
 import { CardService } from './services/card.service';
 import { ComputationService } from './services/computation.service';
@@ -10,6 +9,7 @@ import { ComputePrompt } from './models/compute-prompt';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { FormErrorHandlerService } from './services/form-error-handler.service';
 import { Card } from './models/card';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
