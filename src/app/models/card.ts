@@ -30,13 +30,6 @@ export class Card {
   }
 }
 
-export function getCardValidator(a: CardService): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    // return doublonsNumber ? { doublons: `${doublonsNumber} sont présents` } : null;
-    return {};
-  };
-}
-
 export enum Symbol {
   Club,
   Heart,

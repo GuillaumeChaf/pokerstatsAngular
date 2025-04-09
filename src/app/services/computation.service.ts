@@ -17,6 +17,7 @@ export class ComputationService {
   errorSig: WritableSignal<string | null> = signal(null);
 
   /** requete de calcul de statistiques */
+  //comme
   compute(inputs: ComputePrompt) {
     this.errorSig.set(null);
     this.callbackSig.set(null);

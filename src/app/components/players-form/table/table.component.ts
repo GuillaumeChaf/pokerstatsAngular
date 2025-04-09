@@ -23,10 +23,4 @@ export class TableComponent {
   pictureheightSig: WritableSignal<number> = signal(800);
   /** largeur calculé par rapport au ratio */
   widthSig: Signal<number> = computed(() => this.pictureheightSig() * this.pictureRatio);
-  /** élément de l'image */
-  // @ViewChild('picture') picture?: ElementRef<HTMLPictureElement>;
-
-  // ngAfterViewInit() {
-  //   this.pictureheightSig.set(this.picture?.nativeElement?.clientHeight ?? 800);
-  // }
 }

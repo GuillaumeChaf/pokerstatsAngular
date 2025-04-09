@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, computed, input, Input, InputSignal, Signal } from '@angular/core';
 import { CardRdComponent } from '../card-rd/card-rd.component';
 import { Card } from 'src/app/models/card';
@@ -6,7 +5,7 @@ import { Card } from 'src/app/models/card';
 @Component({
   selector: 'out-list',
   standalone: true,
-  imports: [CardRdComponent, AsyncPipe],
+  imports: [CardRdComponent],
   templateUrl: './out-list.component.html',
   styleUrls: ['./out-list.component.scss', '../card-rd/card-rd.component.scss'],
 })
