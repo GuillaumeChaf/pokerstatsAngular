@@ -35,3 +35,7 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('clickOnTomDwanFirstCard', () => {
+    cy.get('@firstCardTom').children().click()
+  })
